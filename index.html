@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<title>Chord Diagram - Matches among Most Active Right-Handed and Left-Handed Players in the US Open</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+	  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+	
+  </head>
+  <body>
+   <div id="TitleImage"> <img src="images/title.png" border=0 height="200px" width="400px"></div>  
+   <div id="body">
+
+
+      <div id="footer">
+        Match Point: <font color="#084D91">RIGHT</font> or <font color="#4F021B">LEFT</font>?
+
+
+		<div class="hint">
+			<span>Analyzing the results of the matches played between the most active top 10 right-handed and left-handed players in the US Open from 2003 to 2013<span/></br>
+			<span>Mouse over a player's name to highlight</span>
+         
+
+		</div>
+      </div>
+   
+    
+	  <div id="SideText">
+    
+	  <p id="p0" class="pTitle Side">Chord Diagram</p>
+    <p id="p1" class="Side"></p>
+ 	  <p id="p2" class="Side">This chord diagram shows the matches played between the most active top 10 right-handed and left-handed tennis players in the US Open from 2003 to 2013.</p> 
+    <p id="p3" class="Side"><b><font color="#084D91">RIGHT-handed</font> </b>players are colored as blue and <b><font color="#4F021B">LEFT-handed</font></b> players are colored as red. A darker shade means that the corresponding player participated more frequently in all the matches throughout the 11 years.The maximum on each axis represents the number of winning matches for each player.</p>
+	  <p id="p4" class="Side">The chords link the two players in each match. The thickness of chords between players encodes the number of matches that one player won. </p>
+	  <p id="p5" class="Side">This diagram reveals asymmetries: if a chord is tapered, there are more matches a player won against his opponent than vice versa. For example, Rafael Nadal beat Novak Djokovic twice and was defeated by him once. So the end of chord from Rafael Nadal is thicker than the end from Novak Dyokovic. </p>
+	  <p id="p6" class="Side">Mouse over a player's name to focus on his opponents and the results of each match.</p>
+    <p id="p7" class="Side"></p>
+ 	  </div>
+	  <div id="chart"></div>
+	  <div id="BelowText">
+		<p>
+		Right-handed and left-handed tennis players differ in terms of strength and habits. And research shows that Left-handed tennis players have the advantage over their right-handed opponents as they are generally believed to possess better overall spatial, motor and attention functions. But is that true for the top players?  How often did top right-handed players and left-handed players meet in the US Open and how did they perform?
+		</p>
+		<p>
+		The chord diagram represents all the matches played between the top 10 most frequent right-handed and left-handed players in the 2003-2013 US Open.
+		</p>
+		<p>
+		The circle is split up into 20 players with the arc length of each player scaled to the total number of wins. The numbers along the outer rim of the chord Diagram give the total of wins. This shows that Roger Federer won the most with 19 wins and Novak Djokovic is the second with 11 wins.
+		</p>
+		<p>
+		The chords between the arcs visualize the wins between players in both directions. For example, the big dark blue chord connecting Roger Federer and Novak Djokovic in the upper right section shows 3 matches that Federer won against Djokovic and 2 matches Djokovic won from Federer. Even more so, most of the chords at Roger are extremely thin at the other side, thus Roger has won virtually every match (except Tomas Berdych and Tommy Robredo), and he won every match against his left-handed opponents. Interestingly, Federer never played with Nadal, the most active left-handed player, in the US Open.
+		</p>
+		<p>
+		To clarify the right-handed and left-handed players as well as their frequency in all the matches, not limited only to these players, through 11 years, each chord has the darker colour of player that showed up more than others. With this in mind, we can immediately see that even Andy Roddick is a more frequent player than Andy Murray, he did not win as many as the latter among these top players.
+		</p>
+		<p>
+		Finally, this analysis shows no distinct advantage of top left-handed players over right-handed ones except for Rafael Nadal who seemed to be the most unbeatable opponents of the right-handed players.
+    </p>
+    <p id="FootImage"> <img src="images/footimage.png" border=0 height="400px" width="600px"></p>
+	  </div>
+    
+	  <div id="owner">Analysis and Visualization created by <A HREF="mailto:ml3576@columbia.edu?SUBJECT=Top Tennis Player Visualization">Mengying Li   </A><br>  Modified from <A HREF="http://bl.ocks.org/nbremer/raw/6540350/">Switching behavior between phone brands of the Dutch</A> <br> Tennis Players' Information Source: <A HREF="http://www.atpworldtour.com/">Association of Tennis Professionals (ATP)</A>
+
+    </div>
+   
+    
+    <script type="text/javascript">
+	
+var NameProvider = ["Roger Federer","Novak Djokovic","Andy Roddick","Andy Murray","Lleyton Hewitt","David Ferrer","Tommy Robredo","Nikolay Davydenko","Tomas Berdych","James Blake","Rafael Nadal","Fernando Verdasco","Feliciano Lopez","Jurgen Melzer","Jarkko Nieminen","Michael Llodra","Donald Young","Gilles Muller","Thomaz Bellucci","Ricardo Mello"];
+var Nationality =["SUI","SRB","USA","GBR","AUS","ESP","ESP","RUS","CZE","USA","ESP","ESP","ESP","AUT","FIN","FRA","USA","LUX","BRA","BRA"]
+var Weight = [85,80,88,84,77,73,75,70,91,83,85,88,85,81,78,80,79,92,82,73]
+var Height = [185,188,188,190,180,175,180,178,196,185,185,188,188,183,185,190,183,193,188,175]
+var Pro = [1998,2003,2000,2005,1998,2000,1998,1999,2002,1999,2001,2001,1997,1999,2000,1999,2004,2001,2005,1999]
+var Win = [59,45,35,33,27,25,24,22,22,22,41,21,14,11,8,8,5,9,3,3]
+var Lose = [6,8,9,8,9,10,10,11,11,10,8,11,9,9,11,8,9,5,6,5]
+var Total=[65,53,44,41,36,35,34,33,33,32,49,32,23,20,19,16,14,14,9,8]
+var width = 800,
+    height = 800;
+var ggg=[
+  ["http://www.atpworldtour.com/~/media/8BBAF09B49004330870234315C28ED4C.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/811697FB5F6B4291B30648CCA5BCA926.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/E2203F486F9E4C16B9864476E7DD8419.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/DE1AB01D722E400BAAF3DD2E3DBFCB99.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/FA5BEC895B9041FCA5F0C7380604EDA2.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/E29F30DEC39B493AAAE4F56BBA6A1D3C.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/1A4CE0931AC341E184E210E47963F7CD.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/3E11A983ED4344558732C7AF9063612F.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/D7DB4A4DDF7D4197B49C2C8488DAFB85.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/6099538B71D14120AB6DE790C3117204.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/93EC64877CB246E6A3A04DF3B87F7E29.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/B4AA27E3E2494A1682DEC2F50E84EC48.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/396381DDAC3645B284BD74FAEDF86B57.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/3CC98950E3C840E4B17BB3FE3C9A65BF.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/A499444A0F414C4AA07988634F135180.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/A2C4542CDDF04BB2A45D7A30C1566468.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/8E66FCBBE68F4F7A940D5CF1C9E8D16D.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/9072C4986EFF43A99948573A837DFF25.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/41A427213C3C40119BC5087197B31991.ashx?w=148&h=198"],
+  ["http://www.atpworldtour.com/~/media/7A57FB332C114085A62A0DE321C5A433.ashx?w=148&h=198"],
+]
+  
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var g = svg.append("g");
+
+var right="RIGHT-handed";
+var right=right.fontcolor("#084D91")
+var left="LEFT-handed"
+var left=left.fontcolor("#4F021B")
+
+
+
+var matrix = [
+  [0,3,2,1,3,0,1,2,0,2,0,1,1,1,0,0,1,1,0,0],
+  [2,0,1,0,0,2,1,1,0,1,1,1,0,0,0,0,1,0,0,0],
+  [0,0,0,0,1,1,1,0,1,0,1,1,0,0,0,0,0,0,0,0],
+  [0,1,0,0,0,0,0,0,1,0,1,0,2,1,0,2,1,0,0,0],
+  [0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0],
+  [0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
+  [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0],
+  [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+  [0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,0,0],
+  [0,2,1,1,0,0,1,0,0,0,0,1,1,0,0,0,0,1,0,0],
+  [0,1,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+]
+var colors = ["#084D91","#1C5D9D","#306DA9","#457DB5","#598DC1","#6D9DCD","#82ADD9","#96BDE5","#AACDF1","#BFDEFD","#4F021B","#62112C","#75213D","#89314E","#9C415F","#AF5170","#C36181","#D67192","#E981A3","#FD91B4"];
+
+var chord = d3.layout.chord()
+    .padding(.04)
+    .sortSubgroups(d3.descending) //sort the chords inside an arc from high to low
+    .sortChords(d3.descending) //which chord should be shown on top when chords cross. Now the biggest chord is at the bottom
+	  .matrix(matrix);
+
+var width = 900,
+    height = 650,
+    innerRadius = Math.min(width, height) * .39,
+    outerRadius = innerRadius * 1.09;
+	
+var fill = d3.scale.ordinal()
+    .domain(d3.range(NameProvider.length))
+    .range(colors);
+	
+var arc = d3.svg.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius);
+
+var svg = d3.select("#chart").append("svg:svg")
+    .attr("width", width)
+    .attr("height", height+250)
+	.append("svg:g")
+    .attr("transform", "translate(" + (width / 2 + 30)  + "," + (height / 2+180) + ")");
+
+////////////////////////////////////////////////////////////
+////////////////// Draw outer Arcs /////////////////////////
+////////////////////////////////////////////////////////////
+
+var g = svg.selectAll("g.group")
+	.data(chord.groups)
+	.enter().append("svg:g")
+	.attr("class", "group")
+	.on("mouseover", fadeIn(.02))
+	.on("mouseout", fadeOut(.80));
+
+g.append("svg:path")
+  .style("stroke", function(d) { return fill(d.index); })
+  .style("fill", function(d) { return fill(d.index); })
+  .attr("d", arc);
+
+////////////////////////////////////////////////////////////
+////////////////// Append Ticks ////////////////////////////
+////////////////////////////////////////////////////////////
+
+var ticks = svg.append("svg:g").selectAll("g.ticks")
+    .data(chord.groups)
+  .enter().append("svg:g").selectAll("g.ticks")
+  .attr("class", "ticks")
+    .data(groupTicks)
+  .enter().append("svg:g")
+    .attr("transform", function(d) {
+      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+          + "translate(" + outerRadius+40 + ",0)";
+    });
+
+ticks.append("svg:line")
+    .attr("x1", 1)
+    .attr("y1", 0)
+    .attr("x2", 5)
+    .attr("y2", 0)
+    .style("stroke", "#000");
+
+ticks.append("svg:text")
+    .attr("x", 8)
+    .attr("dy", ".35em")
+    .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
+    .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+    .text(function(d) { return d.label; });
+
+////////////////////////////////////////////////////////////
+////////////////// Append Names ////////////////////////////
+////////////////////////////////////////////////////////////
+
+g.append("svg:text")
+  .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
+  .attr("dy", ".35em")
+  .attr("class", "titles")
+  .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+  .attr("transform", function(d) {
+		return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+		+ "translate(" + (innerRadius + 55) + ")"
+		+ (d.angle > Math.PI ? "rotate(180)" : "");
+  })
+  .text(function(d,i) { return NameProvider[i]; });
+
+////////////////////////////////////////////////////////////
+////////////////// Draw inner chords ///////////////////////
+////////////////////////////////////////////////////////////
+  
+svg.selectAll("path.chord")
+	.data(chord.chords)
+	.enter().append("svg:path")
+	.attr("class", "chord")
+	.style("stroke", function(d) { return d3.rgb(fill(d.source.index)).darker(); })
+	.style("fill", function(d) { return fill(d.source.index); })
+	.attr("d", d3.svg.chord().radius(innerRadius));
+
+
+
+////////////////////////////////////////////////////////////
+////////////////// Extra Functions /////////////////////////
+////////////////////////////////////////////////////////////
+
+// Returns an event handler for fading a given chord group.
+
+function fadeIn(opacity) {
+  return function(d, i) {
+    d3.selectAll(".Side")
+    .transition()
+    .duration(200)
+    .style("opacity", 0.0001);
+
+  d3.selectAll(".annotate")
+
+    
+  d3.select("#p0").transition().duration(200).delay(200).style("opacity", 1).text(NameProvider[i]);
+  d3.select("#p1").html("");
+  d3.select("#p1").append("svg").attr("width",120).attr("height",160).append("g").append("svg:image").attr('xlink:href',ggg[i])
+                .attr("width",120) 
+                .attr("height",160)
+                .attr("cx",100)
+                .transition()
+                .duration(200)
+                .delay(200);
+  d3.select("#p1").transition().duration(200).delay(200).style("opacity", 1);
+  d3.select("#p2").transition().duration(200).delay(200).style("opacity", 1).text(NameProvider[i]+ " participated in a total of "+ Total[i]+ " US Open matches from 2003 to 2013. He won "+ Win[i] +" matches and lost "+Lose[i]+"."); 
+  d3.selectAll("#p3").transition().duration(200).delay(200).style("opacity", 1).style("stroke-width", 5).text("Basic Information: ").style("font-weight","bold"); 
+  d3.select("#p4").transition().duration(200).delay(200).style("opacity", 1).text("Nationally: "+Nationality[i]);
+    d3.select("#p5").transition().duration(200).delay(200).style("opacity", 1).text("Height: " +Height[i] +" cm");
+    d3.select("#p6").transition().duration(200).delay(200).style("opacity", 1).text("Weight: " + Weight[i] + " kg");
+    d3.select("#p7").transition().duration(200).delay(200).style("opacity", 1).text("Turned Pro: " + Pro [i]);
+   
+    
+
+  svg.selectAll("path.chord")
+        .filter(function(d) { return d.source.index != i && d.target.index != i; })
+    .transition()
+        .style("stroke-opacity", opacity)
+        .style("fill-opacity", opacity);
+  
+  };
+}//fadeIn
+
+// Returns an event handler for fading a given chord group.
+function fadeOut(opacity) {
+  return function(d, i) {
+
+    d3.selectAll(".Side")
+	  .transition()
+	  .duration(200)
+	  .style("opacity", 0.0001);
+
+	d3.selectAll(".annotate")
+	  .transition()
+	  .duration(200)
+	  .style("opacity", 1);
+	  
+   	d3.select("#p0").transition().duration(200).delay(200).style("opacity", 1).text("Chord Diagram")
+    
+ 	d3.select("#p1").transition().duration(200).delay(200).style("opacity", 1).text("This chord diagram shows the matches played between the most active right-handed and left-handed players in the US Open from 2003 to 2013.")
+
+    d3.select("#p2").html(right+" players are colored as blue and "+left+" players are colored as red. A darker color means that the corresponding player participated more frequently in all the matches in the 11 years.The maximum on each axis represents the number of the matches that one won in total.").style("opacity", 0).transition().duration(200).delay(200).style("opacity", 1).style("font-weight","bold")
+	d3.select("#p3").transition().duration(200).delay(200).style("opacity", 1).text("The chords link the two players in each match. The thickness of chords between players encodes the number of matches that one player won: thicker chords represent that the player won more matches against his opponenet.")
+	d3.select("#p4").transition().duration(200).delay(200).style("opacity", 1).text("This diagram reveals asymmetries: if a chord is tapered, there are more matches a player won against his opponent than vice versa. For example, Rafael Nadal won Novak Djokovic twice and was defeated by him once. So the end of chord from Rafael Nadal is thicker than the end from Novak Dyokovic.")
+	d3.select("#p5").transition().duration(200).delay(200).style("opacity", 1).text("Mouse over a player's name to focus on the opponents of him and the results of each match.")
+  d3.select("#p6").transition().duration(200).delay(200).style("opacity", 1).text("Mouse over a player's name to focus on the opponents of him and the results of each match.")
+ 
+  
+    svg.selectAll("path.chord")
+        .filter(function(d) { return d.source.index != i && d.target.index != i; })
+		.transition()
+        .style("stroke-opacity", opacity)
+        .style("fill-opacity", opacity);
+  };
+}//fadeOut
+
+// Returns an array of tick angles and labels, given a group.
+function groupTicks(d) {
+  var k = (d.endAngle - d.startAngle) / d.value;
+  return d3.range(0, d.value, 1).map(function(v, i) {
+    return {
+      angle: v * k + d.startAngle,
+      label: i % 2? null : v
+    };
+  });
+}//groupTicks
+
+    </script>
+  </body>
+</html>
